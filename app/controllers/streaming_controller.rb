@@ -1,7 +1,4 @@
 class StreamingController < ApplicationController
-  def index
-  end
-  
   def stream
     body = proc do |stream|
       10.downto(1) do |i|
