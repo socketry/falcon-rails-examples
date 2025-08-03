@@ -122,7 +122,7 @@ GEM
       actioncable-next
       async (~> 2.9)
       async-websocket
-    async-container (0.24.0)
+    async-container (0.25.0)
       async (~> 2.22)
     async-container-supervisor (0.5.2)
       async-container (~> 0.22)
@@ -155,14 +155,6 @@ GEM
       async-rest
     async-pool (0.11.0)
       async (>= 2.0)
-    async-rails-x (0.1.1)
-      async-cable
-      async-job-adapter-active_job
-      async-websocket
-      console-adapter-rails
-      falcon
-      live
-      rails (>= 8.0)
     async-redis (0.11.2)
       async (~> 2.10)
       async-pool (~> 0.2)
@@ -180,6 +172,9 @@ GEM
       protocol-http (~> 0.34)
       protocol-rack (~> 0.7)
       protocol-websocket (~> 0.17)
+    bake (0.24.0)
+      bigdecimal
+      samovar (~> 2.1)
     base64 (0.3.0)
     benchmark (0.4.1)
     bigdecimal (3.2.2)
@@ -224,6 +219,15 @@ GEM
       protocol-http (~> 0.31)
       protocol-rack (~> 0.7)
       samovar (~> 2.3)
+    falcon-rails (0.2.2)
+      async-cable
+      async-job-adapter-active_job
+      async-websocket
+      bake
+      console-adapter-rails
+      falcon
+      live
+      rails (>= 8.0)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
       fiber-storage
@@ -331,7 +335,7 @@ GEM
       redis-client (>= 0.22.0)
     redis-client (0.25.1)
       connection_pool
-    regexp_parser (2.10.0)
+    regexp_parser (2.11.0)
     reline (0.6.2)
       io-console (~> 0.5)
     rexml (3.4.1)
@@ -394,10 +398,10 @@ DEPENDENCIES
   async-job-adapter-active_job
   async-job-processor-redis
   async-ollama
-  async-rails-x
   async-redis
   bootsnap
   capybara
+  falcon-rails
   importmap-rails
   jbuilder
   live

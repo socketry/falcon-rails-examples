@@ -10,7 +10,7 @@ gem "sprockets-rails"
 gem "sqlite3", "~> 2.0"
 
 # Use Async and Falcon:
-gem "async-rails-x"
+gem "falcon-rails"
 
 # Async Job example:
 gem "async-job-adapter-active_job"
