@@ -1,0 +1,74 @@
+/* Game Interface Styles */
+
+.game-title {
+	text-align: center;
+	color: #2c3e50;
+	margin-bottom: 20px;
+}
+
+.game-controls {
+	background: #f8f9fa;
+	border: 1px solid #e9ecef;
+	border-radius: 6px;
+	padding: 20px;
+	margin: 20px 0;
+}
+
+.game-controls h4 {
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+
+.grid.control {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 10px;
+	margin: 15px 0;
+}
+
+.control-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.control-item kbd {
+	background: #e9ecef;
+	border: 1px solid #adb5bd;
+	border-radius: 3px;
+	padding: 2px 6px;
+	font-size: 12px;
+}
+
+.focus-tip {
+	margin-top: 15px;
+	font-style: italic;
+	color: #6c757d;
+}
+
+.container.centered {
+	text-align: center;
+	margin: 30px 0;
+}
+
+.game-wrapper.simple {
+	display: inline-block;
+}
+
+.message {
+	min-height: 2.4em;
+	line-height: 1.2em;
+}
+
+.board {
+	border-collapse: collapse;
+	border: 2px solid #333;
+}
+
+.game:focus {
+	outline: none;
+}
+
+.game:focus .board {
+	border-color: #007bff;
+}

@@ -10,6 +10,7 @@ class JobController < ApplicationController
       job = job.set(queue: queue)
     end
 
-    job.perform_later(queued_to: queue)
+    delay = params[:delay].to_i if params[:delay].present?
+    job.perform_later(queued_to: queue, delay: delay)
   end
 end

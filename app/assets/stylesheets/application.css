@@ -121,6 +121,19 @@ p, ul, ol, dl, h3 {
 	margin: 2rem;
 }
 
+section {
+	margin: 2rem;
+}
+
+/* Collapse margins inside sections */
+section > *:first-child {
+	margin-top: 0;
+}
+
+section > *:last-child {
+	margin-bottom: 0;
+}
+
 li {
 	margin: 0.2rem;
 }
@@ -205,7 +218,7 @@ section.features > div i {
 
 section.features div > * {
 	margin: 0;
-	maring-bottom: 1rem;
+	margin-bottom: 1rem;
 	font-size: 80%;
 }
 

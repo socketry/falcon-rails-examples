@@ -1,7 +1,51 @@
-<h1>Robot Finds Kitten</h1>
+<%= stylesheet_link_tag "game", "data-turbo-track": "reload" %>
+
+<h1>🎮 Interactive Game Example</h1>
+<h2 class="game-title">Robot Finds Kitten</h2>
+<p>
+	Real-time interactive game powered by Live::View and WebSocket connections.
+	Demonstrates Falcon's low-latency capabilities for responsive gaming experiences with immediate input handling.
+</p>
+
+<h2>🕹️ Play the Game</h2>
+<p><strong>How to Play:</strong> Use the arrow keys (↑↓←→) or WASD keys to move the robot around the board. Your goal is to find the kitten among all the other objects!</p>
 
 <%= javascript_import_module_tag "live" %>
 
-<p>To play the game, use the arrow keys (or WSAD). Click on the board to give it focus.</p>
+<div class="container centered">
+	<%= raw @tag.to_html %>
+</div>
 
-<%= raw @tag.to_html %>
+<h2>🔧 Technical Implementation</h2>
+<ul>
+	<li><strong>Live::View Framework:</strong> Real-time game state synchronization via WebSocket</li>
+	<li><strong>Keyboard Input:</strong> Low-latency key event processing and game state updates</li>
+	<li><strong>Real-time Rendering:</strong> Instant visual feedback without page refreshes</li>
+	<li><strong>Game State Management:</strong> Server-side game logic with client-side rendering</li>
+	<li><strong>Interactive Elements:</strong> Collision detection and game objective tracking</li>
+</ul>
+
+<h3>📋 Key Files</h3>
+<%= source_code_links(
+	sources: [
+		{ path: 'lib/game_tag.rb', line: 1, description: 'GameTag - Live::View game implementation' },
+		{ path: 'app/controllers/game_controller.rb', line: 1, description: 'GameController - WebSocket connection handling' },
+		{ path: 'app/views/game/index.html.erb', line: 1, description: 'game/index.html.erb - Game interface' }
+	]
+) %>
+
+<h3>🚀 Performance Benefits</h3>
+<p>
+	Traditional web-based games suffer from input lag and poor responsiveness. Falcon's async architecture 
+	combined with WebSocket connections provides near real-time game input processing, crucial for 
+	responsive gaming experiences.
+</p>
+
+<h3>🎯 Game Features</h3>
+<ul>
+	<li><strong>Real-time Movement:</strong> Instant response to keyboard input</li>
+	<li><strong>Collision Detection:</strong> Server-side game physics and logic</li>
+	<li><strong>Visual Feedback:</strong> Immediate screen updates for all actions</li>
+	<li><strong>Game Objective:</strong> Navigate the robot to find the kitten</li>
+</ul>
+

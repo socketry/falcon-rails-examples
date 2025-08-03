@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   # Streaming Example:
   get 'streaming/index'
+  get 'streaming/stream'
 
   # Chat Example:
   get "chat/index"

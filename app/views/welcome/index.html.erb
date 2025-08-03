@@ -1,15 +1,120 @@
-<h1>Ruby on Rails on Falcon</h1>
+<%= stylesheet_link_tag "welcome", "data-turbo-track": "reload" %>
 
-<p>Welcome to the Ruby on Rails on Falcon demo application.</p>
+<h1>🚀 Ruby on Rails on Falcon</h1>
+<p class="hero-description">
+	Discover the power of high-performance web applications with this comprehensive 
+	collection of Falcon examples. Each demo showcases different aspects of Falcon's 
+	async architecture and real-time capabilities.
+</p>
 
-<h2>Examples</h2>
+<h2>🎯 Interactive Examples</h2>
+<p>Explore each example to understand how Falcon excels in different scenarios:</p>
 
-<ul>
-	<li><%= link_to 'Streaming Example', streaming_index_path %></li>
-	<li><%= link_to 'Chat Example', chat_index_path %></li>
-	<li><%= link_to 'Game Example', game_index_path %></li>
-	<li><%= link_to 'Job Example', job_index_path %></li>
-	<li><%= link_to 'Ollama Example', ollama_index_path %></li>
-	<li><%= link_to 'Flappy Example', flappy_index_path %></li>
-	<li><%= link_to 'SSE Example', sse_index_path %></li>
-</ul>
+<div class="examples-grid">
+	<div class="example-card">
+		<div class="example-header">
+			<span class="example-emoji">🌊</span>
+			<%= link_to 'Streaming Example', streaming_index_path %>
+		</div>
+		<p class="example-description">
+			HTTP response streaming with progressive rendering. Perfect for live logs, 
+			progress indicators, and real-time data feeds.
+		</p>
+		<div class="example-tags">
+			<span class="tag">HTTP Streaming</span>
+			<span class="tag">Progressive Rendering</span>
+		</div>
+	</div>
+
+	<div class="example-card">
+		<div class="example-header card">
+			<span class="example-emoji">💬</span>
+			<%= link_to 'Chat Example', chat_index_path %>
+		</div>
+		<p class="example-description">
+			Real-time multi-user chat with WebSocket and Redis pub/sub. 
+			Demonstrates excellent concurrent connection handling.
+		</p>
+		<div class="example-tags">
+			<span class="tag">WebSocket</span>
+			<span class="tag">Redis Pub/Sub</span>
+			<span class="tag">Multi-user</span>
+		</div>
+	</div>
+
+	<div class="example-card">
+		<div class="example-header">
+			<span class="example-emoji">🎮</span>
+			<%= link_to 'Game Example', game_index_path %>
+		</div>
+		<p class="example-description">
+			Interactive "Robot Finds Kitten" game with real-time input processing 
+			and Live::View state management.
+		</p>
+		<div class="example-tags">
+			<span class="tag">Live::View</span>
+			<span class="tag">Real-time Gaming</span>
+		</div>
+	</div>
+
+	<div class="example-card">
+		<div class="example-header">
+			<span class="example-emoji">⚡</span>
+			<%= link_to 'Job Example', job_index_path %>
+		</div>
+		<p class="example-description">
+			Background job processing with ActiveJob integration. 
+			Shows seamless web request and job processing coordination.
+		</p>
+		<div class="example-tags">
+			<span class="tag">ActiveJob</span>
+			<span class="tag">Background Processing</span>
+		</div>
+	</div>
+
+	<div class="example-card">
+		<div class="example-header">
+			<span class="example-emoji">🤖</span>
+			<%= link_to 'Ollama Example', ollama_index_path %>
+		</div>
+		<p class="example-description">
+			AI chat interface with streaming LLM responses. 
+			Perfect showcase of Falcon's streaming capabilities with AI integration.
+		</p>
+		<div class="example-tags">
+			<span class="tag">AI/LLM</span>
+			<span class="tag">Streaming</span>
+			<span class="tag">Ollama</span>
+		</div>
+	</div>
+
+	<div class="example-card">
+		<div class="example-header">
+			<span class="example-emoji">🐦</span>
+			<%= link_to 'Flappy Example', flappy_index_path %>
+		</div>
+		<p class="example-description">
+			Complete Flappy Bird clone with 60fps real-time physics, 
+			collision detection, and high score tracking.
+		</p>
+		<div class="example-tags">
+			<span class="tag">Real-time Gaming</span>
+			<span class="tag">Physics Engine</span>
+		</div>
+	</div>
+
+	<div class="example-card">
+		<div class="example-header">
+			<span class="example-emoji">📡</span>
+			<%= link_to 'SSE Example', sse_index_path %>
+		</div>
+		<p class="example-description">
+			Server-Sent Events for one-way real-time updates. 
+			Lightweight alternative to WebSocket for live dashboards.
+		</p>
+		<div class="example-tags">
+			<span class="tag">Server-Sent Events</span>
+			<span class="tag">Live Updates</span>
+		</div>
+	</div>
+</div>

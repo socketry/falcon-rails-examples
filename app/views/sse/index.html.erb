@@ -1,13 +1,62 @@
-<h1>SSE Events</h1>
+<%= stylesheet_link_tag "sse", "data-turbo-track": "reload" %>
 
-<div id="history"></div>
+<h1>📡 Server-Sent Events (SSE) Example</h1>
+<p>
+	Demonstrates Server-Sent Events for one-way real-time updates from server to client.
+	Perfect for live dashboards, notifications, and monitoring systems where bi-directional communication isn't needed.
+</p>
+
+<h2>⏱️ Live Event Stream</h2>
+	<p>Watch real-time server events appear below. Each message shows the current server time:</p>
+	
+<div id="status" class="status warning">🔄 Connecting to event stream...</div>
+<div id="history" class="container terminal"></div>
+
 <script>
 	var eventSource = new EventSource("events");
+	var messageCount = 0;
+	
+	eventSource.addEventListener("open", function(event) {
+		document.getElementById("status").innerHTML = "✅ Connected to event stream";
+		document.getElementById("status").className = "status success";
+	});
+	
 	eventSource.addEventListener("message", function(event) {
-		var container = document.createElement("p");
-		container.innerText = event.data;
+		messageCount++;
+		var container = document.createElement("div");
+		container.className = "terminal-line";
+		container.innerHTML = `<span class="event-count">#${messageCount}</span> <span class="event-data">${event.data}</span>`;
 		var history = document.querySelector("#history");
 		history.appendChild(container);
 		history.scrollTop = history.scrollHeight;
+		
+		// Keep only last 20 messages
+		if (history.children.length > 20) {
+			history.removeChild(history.firstChild);
+		}
+	});
+	
+	eventSource.addEventListener("error", function(event) {
+		document.getElementById("status").innerHTML = "❌ Connection error - attempting to reconnect...";
+		document.getElementById("status").className = "status error";
 	});
 </script>
+
+<h2>🔧 Technical Implementation</h2>
+<ul>
+	<li><strong>EventSource API:</strong> Uses browser's native EventSource for automatic reconnection</li>
+	<li><strong>Streaming Response:</strong> Long-lived HTTP connection with <code>text/event-stream</code> content type</li>
+	<li><strong>Real-time Updates:</strong> Server pushes timestamped messages every second</li>
+	<li><strong>Connection Monitoring:</strong> Displays database connection pool statistics</li>
+</ul>
+
+<h3>📋 Key Files</h3>
+<%= source_code_links(
+	sources: [
+		{ path: 'app/controllers/sse_controller.rb', line: 9, description: 'SseController#events - Server-Sent Events endpoint' },
+		{ path: 'app/views/sse/index.html.erb', line: 70, description: 'sse/index.html.erb - EventSource client code' }
+	]
+) %>
+
+<h3>🚀 Performance Benefits</h3>
+<p>SSE provides a lightweight alternative to WebSockets when you only need server-to-client communication. It is easier to use as it has automatic reconnection and built-in browser support. Falcon handles these persistent connections efficiently without blocking other requests.</p>

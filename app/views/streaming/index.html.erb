@@ -1,0 +1,135 @@
+
+<%= stylesheet_link_tag "streaming", "data-turbo-track": "reload" %>
+
+<h1>🌊 Streaming Example</h1>
+<p>
+	Demonstrates HTTP response streaming with progressive rendering. Shows how Falcon handles long-running 
+	streaming responses efficiently, perfect for progress indicators, live logs, or real-time data feeds.
+</p>
+
+<h2>🎵 Try the Streaming Demo</h2>
+<p>Click the button below to start the streaming "99 Bottles of Beer" countdown. 
+	Notice how the text appears progressively in real-time!</p>
+
+<button id="startStream" class="button">🚀 Start Streaming Demo</button>
+<button id="stopStream" class="button" disabled>⏹️ Stop Stream</button>
+
+<div id="streamOutput" class="container terminal"></div>
+
+<script>
+let streamController = null;
+let streamReader = null;
+
+document.getElementById('startStream').addEventListener('click', function() {
+	const output = document.getElementById('streamOutput');
+	const startBtn = document.getElementById('startStream');
+	const stopBtn = document.getElementById('stopStream');
+	
+	// Clear previous output
+	output.innerHTML = '<div class="terminal-status">🔄 Starting stream...</div>';
+	
+	// Disable start button, enable stop button
+	startBtn.disabled = true;
+	stopBtn.disabled = false;
+	
+	// Create abort controller for stopping the stream
+	streamController = new AbortController();
+	
+	// Start streaming
+	fetch('/streaming/stream', { signal: streamController.signal })
+		.then(response => {
+			if (!response.ok) throw new Error('Network response was not ok');
+			
+			streamReader = response.body.getReader();
+			const decoder = new TextDecoder();
+			
+			function readStream() {
+				streamReader.read().then(({ done, value }) => {
+					if (done) {
+						output.innerHTML += '<div class="terminal-complete">✅ Stream completed!</div>';
+						startBtn.disabled = false;
+						stopBtn.disabled = true;
+						streamController = null;
+						streamReader = null;
+						return;
+					}
+					
+					const text = decoder.decode(value, { stream: true });
+					const lines = text.split('\n');
+					
+					lines.forEach(line => {
+						if (line.trim()) {
+							const lineDiv = document.createElement('div');
+							lineDiv.className = 'terminal-line';
+							lineDiv.textContent = line;
+							output.appendChild(lineDiv);
+							output.scrollTop = output.scrollHeight;
+						}
+					});
+					
+					readStream();
+				}).catch(error => {
+					if (error.name === 'AbortError') {
+						output.innerHTML += '<div class="terminal-stopped">⏹️ Stream stopped by user</div>';
+					} else {
+						console.error('Stream error:', error);
+						output.innerHTML += '<div class="terminal-error">❌ Stream error: ' + error.message + '</div>';
+					}
+					startBtn.disabled = false;
+					stopBtn.disabled = true;
+					streamController = null;
+					streamReader = null;
+				});
+			}
+			
+			readStream();
+		})
+		.catch(error => {
+			if (error.name !== 'AbortError') {
+				console.error('Fetch error:', error);
+				output.innerHTML = '<div class="terminal-error">❌ Failed to start stream: ' + error.message + '</div>';
+			}
+			startBtn.disabled = false;
+			stopBtn.disabled = true;
+			streamController = null;
+			streamReader = null;
+		});
+});
+
+document.getElementById('stopStream').addEventListener('click', function() {
+	if (streamController) {
+		streamController.abort();
+	}
+});
+</script>
+
+<h2>🔧 Technical Implementation</h2>
+<ul>
+	<li><strong>Streaming Response:</strong> Uses <code>Rack::Response</code> with a proc body for streaming</li>
+	<li><strong>Progressive Rendering:</strong> Browser starts rendering immediately with chunked transfer encoding</li>
+	<li><strong>Non-blocking:</strong> Falcon handles streaming without blocking other requests</li>
+	<li><strong>Buffer Control:</strong> Includes initial buffer padding to trigger browser rendering</li>
+</ul>
+
+<h3>📋 Key Files</h3>
+<%= source_code_links(
+	sources: [
+		{ path: 'app/controllers/streaming_controller.rb', line: 1, description: 'StreamingController - HTTP streaming implementation' },
+		{ path: 'app/views/streaming/index.html.erb', line: 1, description: 'streaming/index.html.erb - Documentation page' }
+	]
+) %>
+
+<h3>🚀 Performance Benefits</h3>
+<p>
+	Traditional Ruby web servers struggle with long-running requests that block worker processes. 
+	Falcon's async architecture allows multiple streaming responses simultaneously without resource exhaustion.
+</p>
+
+<h3>💡 Use Cases</h3>
+<ul>
+	<li><strong>Progress Indicators:</strong> Long-running task progress</li>
+	<li><strong>Live Logs:</strong> Real-time log streaming</li>
+	<li><strong>Data Exports:</strong> Large CSV/JSON file generation</li>
+	<li><strong>Live Updates:</strong> Status updates during processing</li>
+</ul>
+

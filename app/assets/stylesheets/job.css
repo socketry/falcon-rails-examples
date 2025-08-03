@@ -1,0 +1,40 @@
+/* Job Interface Styles */
+
+.form-inline {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	margin: 2rem;
+	flex-wrap: wrap;
+}
+
+.form-group {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.form-control {
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0;
+}
+
+.table th,
+.table td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+.table th {
+	background: #f8f9fa;
+	font-weight: bold;
+}

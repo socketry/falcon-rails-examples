@@ -1,0 +1,28 @@
+/* Chat Interface Styles */
+
+#response {
+	border: 1px solid #ccc;
+	padding: 15px;
+	height: 300px;
+	overflow-y: auto;
+	margin-bottom: 15px;
+	background: #fafafa;
+	border-radius: 6px;
+}
+
+.input {
+	margin-bottom: 20px;
+}
+
+.form-control.chat {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.form-control.chat:disabled {
+	background: #f5f5f5;
+	color: #666;
+}

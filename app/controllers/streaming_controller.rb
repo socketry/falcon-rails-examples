@@ -2,6 +2,9 @@ class StreamingController < ApplicationController
   PREFIX = (("." * 1024) + "\n").freeze
   
   def index
+  end
+  
+  def stream
     body = proc do |stream|
       # This gets the browser to start rendering interactively:
       stream.write(PREFIX)
@@ -18,7 +21,7 @@ class StreamingController < ApplicationController
       end
     end
 
-    # Works, puma, falcon, Rails 7.1
+    # Works with puma, falcon, Rails 7.1
     self.response = Rack::Response[200, {"content-type" => "text/plain"}, body]
   end
 end

@@ -1,6 +1,48 @@
-<h1>Flappy</h1>
+<h1>🐦 Flappy Bird Game Example</h1>
+<p>
+	Complete Flappy Bird clone demonstrating high-performance real-time gaming with Live::View.
+	Showcases Falcon's low-latency WebSocket capabilities for responsive game physics and smooth animation.
+</p>
+
+<h2>🎮 Play Flappy Bird</h2>
+<p>Click/tap anywhere or press SPACE to make the bird flap its wings. Avoid the pipes and try to get the highest score possible!</p>
 
 <%= javascript_import_module_tag "live" %>
 <%= stylesheet_link_tag "flappy" %>
 
-<%= raw @tag.to_html %>
+<div class="container flappy centered">
+	<%= raw @tag.to_html %>
+</div>
+
+<h2>🔧 Technical Implementation</h2>
+<ul>
+	<li><strong>Real-time Game Loop:</strong> Smooth 60fps game physics via WebSocket updates</li>
+	<li><strong>Collision Detection:</strong> Server-side physics calculations for accuracy</li>
+	<li><strong>Score Tracking:</strong> Live score updates and high score persistence</li>
+	<li><strong>Graphics Rendering:</strong> Canvas-based game graphics with sprite animations</li>
+	<li><strong>Input Handling:</strong> Ultra-low latency keyboard and click input processing</li>
+</ul>
+
+<h3>📋 Key Files</h3>
+<%= source_code_links(
+	sources: [
+		{ path: 'lib/flappy_tag.rb', line: 1, description: 'FlappyTag - Live::View game engine' },
+		{ path: 'app/controllers/flappy_controller.rb', line: 1, description: 'FlappyController - WebSocket game connection' },
+		{ path: 'app/assets/stylesheets/flappy.css', line: 1, description: 'flappy.css - Game styling and animations' },
+		{ path: 'app/assets/images', line: 1, description: 'assets/images/ - Game sprites (flappy-*.png)' }
+	]
+) %>
+
+<h3>🚀 Performance Benefits</h3>
+<p>
+	Traditional web games struggle with consistent frame rates and input lag. Falcon's async architecture 
+	enables smooth 60fps gameplay with minimal latency, rivaling native desktop game performance.
+</p>
+
+<h3>🎮 Game Mechanics</h3>
+<ul>
+	<li><strong>Physics Engine:</strong> Gravity, velocity, and collision calculations</li>
+	<li><strong>Procedural Generation:</strong> Infinite scrolling pipe obstacles</li>
+	<li><strong>Difficulty Scaling:</strong> Progressive speed increases</li>
+	<li><strong>High Scores:</strong> Persistent leaderboard system</li>
+</ul>

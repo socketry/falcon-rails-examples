@@ -1,30 +1,112 @@
-<h1>Async Job</h1>
+<%= stylesheet_link_tag "job", "data-turbo-track": "reload" %>
 
-<p>This is a simple example of how to use the async job gem. You can use the form below to submit a job to the queue. The job will be executed in the background and the results will be displayed in the table below.</p>
+<h1>⚡ Background Job Example</h1>
+<p>
+	Demonstrates background job processing with Falcon and ActiveJob integration. 
+	Shows how Falcon efficiently handles background job queuing while maintaining excellent performance for web requests.
+</p>
 
-<p><strong>Note:</strong> The "default" queue will only work if you have Redis and <tt>bundle exec async-job-adapter-active_job-server</tt> running.</p>
+<h2>🎯 Try Background Jobs</h2>
+<p>Submit a job to see real-time background processing in action. Job results will appear in the table below automatically!</p>
 
-<form action="<%= job_execute_path %>" method="post">
-	<select name="queue">
-		<% Rails.application.config.async_job.definitions.each do |name, _| %>
-		<option value="<%= name %>"><%= name %></option>
-		<% end %>
-	</select>
-	<input type="submit" value="Submit" />
+<form action="<%= job_execute_path %>" method="post" class="form-inline">
+	<div class="form-group">
+		<label for="queue">Select Queue:</label>
+		<select name="queue" id="queue" class="form-control">
+			<% Rails.application.config.async_job.definitions.each do |name, _| %>
+			<option value="<%= name %>"><%= name %></option>
+			<% end %>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="delay">Delay (seconds):</label>
+		<input type="number" name="delay" id="delay" class="form-control" min="0" max="60" value="0" placeholder="0">
+	</div>
+	<button type="submit" class="button success">🚀 Submit Job</button>
 </form>
 
-<h2>Job Executions</h2>
+<div class="status success" id="jobStatus" style="display: none;">
+	<div class="status-message">✅ Job submitted successfully! Watch for results below...</div>
+</div>
+
+<h2>📊 Job Execution History</h2>
+<p>Live updates powered by Turbo Streams - new job executions appear automatically:</p>
+
 <%= turbo_stream_from "job_executions" %>
 
-<table>
+<table class="table">
 	<thead>
 		<tr>
 			<th>ID</th>
-			<th>Name</th>
+			<th>Job Name</th>
 			<th>Data</th>
+			<th>Created At</th>
 		</tr>
 	</thead>
 	<tbody id="job_executions">
 		<%= render @job_executions %>
 	</tbody>
 </table>
+
+<script>
+document.querySelector('.form-inline').addEventListener('submit', function(e) {
+	const statusDiv = document.getElementById('jobStatus');
+	statusDiv.style.display = 'block';
+	
+	// Hide status after 3 seconds
+	setTimeout(() => {
+		statusDiv.style.display = 'none';
+	}, 3000);
+});
+</script>
+
+<h2>🔧 Technical Implementation</h2>
+<ul>
+	<li><strong>ActiveJob Integration:</strong> Standard Rails ActiveJob framework</li>
+	<li><strong>Async Job Adapter:</strong> Uses async-job gem for high-performance job processing</li>
+	<li><strong>Multiple Queues:</strong> Support for different queue priorities and types</li>
+	<li><strong>Real-time Updates:</strong> Turbo Stream integration for live job execution tracking</li>
+	<li><strong>Persistent Storage:</strong> Job execution records stored in database</li>
+</ul>
+
+<h3>📋 Key Files</h3>
+<%= source_code_links(
+	sources: [
+		{ path: 'app/controllers/job_controller.rb', line: 1, description: 'JobController - Job submission and monitoring' },
+		{ path: 'app/jobs/my_job.rb', line: 1, description: 'MyJob - Background job implementation' },
+		{ path: 'app/models/job_execution.rb', line: 1, description: 'JobExecution - Job tracking model' },
+		{ path: 'config/initializers/async_job.rb', line: 1, description: 'async_job.rb - Job queue configuration' }
+	]
+) %>
+
+<h3>🚀 Performance Benefits</h3>
+<p>
+	Traditional Ruby web servers can struggle when job processing blocks request handling. 
+	Falcon's async architecture allows seamless integration between web requests and background job processing,
+	maintaining responsive web performance even under heavy job loads.
+</p>
+
+<h3>🔄 Job Queues Available</h3>
+<div class="queue-info">
+	<% Rails.application.config.async_job.definitions.each do |name, config| %>
+	<div class="queue-item">
+		<strong><%= name %></strong>
+		<span class="queue-details">Queue for background job processing</span>
+	</div>
+	<% end %>
+</div>
+
+<div class="setup-info">
+	<h3>⚙️ Setup Requirements</h3>
+	<div class="requirement-item">
+		<strong>Redis Server:</strong> Must be running on localhost for job queuing
+	</div>
+	<div class="requirement-item">
+		<strong>Job Server:</strong> Run <code>bundle exec async-job-adapter-active_job-server</code> to process jobs
+	</div>
+	<div class="requirement-item">
+		<strong>Database:</strong> Job executions are tracked in the database
+	</div>
+</div>
+
+

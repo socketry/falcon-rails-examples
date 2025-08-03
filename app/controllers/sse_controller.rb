@@ -7,13 +7,8 @@ class SseController < ApplicationController
 	}
 
 	def events
-		Highscore.with_connection(prevent_permanent_checkout: true) do
-			highscore_id = Highscore.last.id
-		end
-		
 		body = proc do |stream|
 			while true
-				Console.info(self, "Connection Pool Stat", stats: Highscore.connection_pool.stat)
 				stream.write("data: #{Time.now}\n\n")
 				sleep 1
 			end

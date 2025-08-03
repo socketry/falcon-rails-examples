@@ -1,5 +1,74 @@
-<h1>Ollama</h1>
+<%= stylesheet_link_tag "ollama", "data-turbo-track": "reload" %>
+
+<h1>🤖 Ollama AI Chat Example</h1>
+<p>
+	Interactive AI chat interface powered by Ollama with real-time streaming responses.
+	Demonstrates Falcon's excellent streaming capabilities combined with AI/LLM integration for responsive conversational AI.
+</p>
+
+<h2>💬 Try the AI Chat</h2>
+	<p>Start a conversation with the AI below. Watch as responses stream in real-time, token by token!</p>
+	
+<div class="chat-tips">
+	<h4>💡 Try asking:</h4>
+	<ul>
+		<li>"Explain how Falcon web server works"</li>
+		<li>"Write a Ruby method to reverse a string"</li>
+		<li>"What are the benefits of async programming?"</li>
+	</ul>
+</div>
 
 <%= javascript_import_module_tag "live" %>
 
-<%= raw @tag.to_html %>
+<div class="chat-container">
+	<%= raw @tag.to_html %>
+</div>
+
+<h2>🔧 Technical Implementation</h2>
+<ul>
+	<li><strong>Ollama Integration:</strong> Uses async-ollama gem for local LLM inference</li>
+	<li><strong>Streaming Responses:</strong> Real-time AI response streaming via WebSocket</li>
+	<li><strong>Live::View Framework:</strong> Real-time UI updates without page refreshes</li>
+	<li><strong>Persistent Conversations:</strong> Chat history stored in database with models</li>
+	<li><strong>Markdown Rendering:</strong> AI responses rendered with Markly for rich formatting</li>
+</ul>
+
+<h3>📋 Key Files</h3>
+<%= source_code_links(
+	sources: [
+		{ path: 'lib/ollama_tag.rb', line: 22, description: 'OllamaTag - Live::View AI chat implementation' },
+		{ path: 'app/controllers/ollama_controller.rb', line: 1, description: 'OllamaController - WebSocket connection handling' },
+		{ path: 'app/models/conversation.rb', line: 1, description: 'Conversation - Chat conversation management' },
+		{ path: 'app/models/conversation_message.rb', line: 1, description: 'ConversationMessage - Individual message storage' }
+	]
+) %>
+
+<h3>🚀 Performance Benefits</h3>
+<p>
+	AI responses can take several seconds to generate. Falcon's streaming capabilities allow showing 
+	partial responses as they're generated, creating a much more responsive user experience compared 
+	to waiting for complete responses.
+</p>
+
+<h3>🎯 Key Features</h3>
+<ul>
+	<li><strong>Token-by-Token Streaming:</strong> Responses appear character by character</li>
+	<li><strong>Conversation Memory:</strong> AI remembers context from previous messages</li>
+	<li><strong>Rich Formatting:</strong> Supports markdown in AI responses</li>
+	<li><strong>Real-time Updates:</strong> UI updates live as AI generates responses</li>
+</ul>
+
+<div class="setup-info">
+	<h3>⚙️ Setup Requirements</h3>
+	<div class="requirement-item">
+		<strong>Ollama Server:</strong> Must have Ollama running locally with a model installed
+	</div>
+	<div class="requirement-item">
+		<strong>Model Installation:</strong> Run <code>ollama pull llama2</code> or similar to install an AI model
+	</div>
+	<div class="requirement-item">
+		<strong>Database:</strong> Conversations and messages are persisted to database
+	</div>
+</div>
+
+

@@ -1,8 +1,41 @@
-<h1>Chat</h1>
+<%= stylesheet_link_tag "chat", "data-turbo-track": "reload" %>
 
-<script src="client.js"></script>
-<section id="response" style="border: 1px;"></section>
+<h1>💬 Chat Example</h1>
+<p>
+	Real-time multi-user chat application demonstrating WebSocket connections with Redis pub/sub messaging.
+	This example showcases Falcon's excellent WebSocket performance and concurrent connection handling.
+</p>
+
+<h2>💭 Try the Chat</h2>
+	<p>Open multiple browser tabs to see real-time messaging between users!</p>
+	
+	<script src="client.js"></script>
+	<section id="response"></section>
 
 <section class="input">
-	<input id="chat" disabled="true"/>
+	<input id="chat" disabled="true" placeholder="Type your message and press Enter..." class="form-control chat"/>
 </section>
+
+<h2>🔧 Technical Implementation</h2>
+<ul>
+	<li><strong>WebSocket Connection:</strong> Uses <code>Async::WebSocket::Adapters::Rails</code> for WebSocket handling</li>
+	<li><strong>Message Broadcasting:</strong> Redis pub/sub system for real-time message distribution</li>
+	<li><strong>Concurrent Handling:</strong> Multiple users can join and chat simultaneously</li>
+	<li><strong>Channel Support:</strong> Configurable chat channels (default: 'chat.general')</li>
+</ul>
+
+<h3>📋 Key Files</h3>
+<%= source_code_links(
+	sources: [
+		{ path: 'app/controllers/chat_controller.rb', line: 10, description: 'ChatController#connect - WebSocket handling' },
+		{ path: 'lib/chat.rb', line: 1, description: 'Chat::Redis - Redis client setup' },
+		{ path: 'public/chat/client.js', line: 1, description: 'client.js - Frontend WebSocket client' }
+	]
+) %>
+
+<h3>🚀 Performance Benefits</h3>
+<p>
+	Traditional Ruby web servers struggle with persistent WebSocket connections. Falcon's async architecture
+	allows handling thousands of concurrent chat connections with minimal resource usage.
+</p>
+
