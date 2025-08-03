@@ -116,7 +116,7 @@ class GameTag < Live::View
 	def handle(event)
 		# Console.info(self, "handle", event.inspect)
 		
-		if event[:type] == "keyup"
+		if event[:type] == "keydown"
 			detail = event[:detail]
 			
 			case detail[:code]
@@ -136,11 +136,11 @@ class GameTag < Live::View
 	end
 	
 	def forward_keypress
-		"live.forwardEvent(#{JSON.dump(@id)}, event, {code: event.code})"
+		"event.preventDefault(); live.forwardEvent(#{JSON.dump(@id)}, event, {code: event.code})"
 	end
 	
 	def render(builder)
-		builder.tag(:div, class: "game", tabIndex: 0, onkeyup: forward_keypress) do
+		builder.tag(:div, class: "game", tabIndex: 0, onkeydown: forward_keypress) do
 			builder.tag(:table, class: "board") do
 				board.height.times do |y|
 					builder.tag(:tr) do
