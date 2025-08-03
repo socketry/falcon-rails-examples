@@ -10,9 +10,7 @@
 <%= javascript_import_module_tag "live" %>
 <%= stylesheet_link_tag "flappy" %>
 
-<div class="container flappy centered">
-	<%= raw @tag.to_html %>
-</div>
+<%= raw @tag.to_html %>
 
 <h2>🔧 Technical Implementation</h2>
 <ul>
@@ -41,8 +39,8 @@
 
 <h3>🎮 Game Mechanics</h3>
 <ul>
-	<li><strong>Physics Engine:</strong> Gravity, velocity, and collision calculations</li>
-	<li><strong>Procedural Generation:</strong> Infinite scrolling pipe obstacles</li>
-	<li><strong>Difficulty Scaling:</strong> Progressive speed increases</li>
-	<li><strong>High Scores:</strong> Persistent leaderboard system</li>
+	<li><strong>Physics Engine:</strong> Gravity, velocity, and collision calculations.</li>
+	<li><strong>Procedural Generation:</strong> Infinite scrolling pipe obstacles.</li>
+	<li><strong>Difficulty Scaling:</strong> Gap gets smaller over time.</li>
+	<li><strong>High Scores:</strong> Persistent leaderboard system.</li>
 </ul>

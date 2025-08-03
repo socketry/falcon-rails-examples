@@ -1,14 +1,9 @@
 class StreamingController < ApplicationController
-  PREFIX = (("." * 1024) + "\n").freeze
-  
   def index
   end
   
   def stream
     body = proc do |stream|
-      # This gets the browser to start rendering interactively:
-      stream.write(PREFIX)
-      
       10.downto(1) do |i|
         stream.write "#{i} bottles of beer on the wall\n"
         sleep 1

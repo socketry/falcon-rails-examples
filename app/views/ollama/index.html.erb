@@ -9,15 +9,6 @@
 <h2>💬 Try the AI Chat</h2>
 	<p>Start a conversation with the AI below. Watch as responses stream in real-time, token by token!</p>
 	
-<div class="chat-tips">
-	<h4>💡 Try asking:</h4>
-	<ul>
-		<li>"Explain how Falcon web server works"</li>
-		<li>"Write a Ruby method to reverse a string"</li>
-		<li>"What are the benefits of async programming?"</li>
-	</ul>
-</div>
-
 <%= javascript_import_module_tag "live" %>
 
 <div class="chat-container">
@@ -26,11 +17,11 @@
 
 <h2>🔧 Technical Implementation</h2>
 <ul>
-	<li><strong>Ollama Integration:</strong> Uses async-ollama gem for local LLM inference</li>
-	<li><strong>Streaming Responses:</strong> Real-time AI response streaming via WebSocket</li>
-	<li><strong>Live::View Framework:</strong> Real-time UI updates without page refreshes</li>
-	<li><strong>Persistent Conversations:</strong> Chat history stored in database with models</li>
-	<li><strong>Markdown Rendering:</strong> AI responses rendered with Markly for rich formatting</li>
+	<li><strong>Ollama Integration:</strong> Uses async-ollama gem for local LLM inference.</li>
+	<li><strong>Streaming Responses:</strong> Real-time AI response streaming via WebSocket.</li>
+	<li><strong>Live::View Framework:</strong> Real-time UI updates without page refreshes.</li>
+	<li><strong>Persistent Conversations:</strong> Chat history stored in database with models.</li>
+	<li><strong>Markdown Rendering:</strong> AI responses rendered with Markly for rich formatting.</li>
 </ul>
 
 <h3>📋 Key Files</h3>
@@ -58,17 +49,9 @@
 	<li><strong>Real-time Updates:</strong> UI updates live as AI generates responses</li>
 </ul>
 
-<div class="setup-info">
-	<h3>⚙️ Setup Requirements</h3>
-	<div class="requirement-item">
-		<strong>Ollama Server:</strong> Must have Ollama running locally with a model installed
-	</div>
-	<div class="requirement-item">
-		<strong>Model Installation:</strong> Run <code>ollama pull llama2</code> or similar to install an AI model
-	</div>
-	<div class="requirement-item">
-		<strong>Database:</strong> Conversations and messages are persisted to database
-	</div>
-</div>
-
-
+<h3>⚙️ Setup Requirements</h3>
+<ul>
+	<li><strong>Ollama Server:</strong> Must have Ollama running locally with a model installed.</li>
+	<li><strong>Model Installation:</strong> Run <code>ollama pull llama2</code> or similar to install an AI model.</li>
+	<li><strong>Database:</strong> Conversations and messages are persisted to database.</li>
+</ul>

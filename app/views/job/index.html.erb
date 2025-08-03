@@ -7,7 +7,7 @@
 </p>
 
 <h2>🎯 Try Background Jobs</h2>
-<p>Submit a job to see real-time background processing in action. Job results will appear in the table below automatically!</p>
+<p>Submit a job to see real-time background processing in action. Job results will appear in the table below automatically (make sure the job server is running!)</p>
 
 <form action="<%= job_execute_path %>" method="post" class="form-inline">
 	<div class="form-group">
@@ -62,11 +62,11 @@ document.querySelector('.form-inline').addEventListener('submit', function(e) {
 
 <h2>🔧 Technical Implementation</h2>
 <ul>
-	<li><strong>ActiveJob Integration:</strong> Standard Rails ActiveJob framework</li>
-	<li><strong>Async Job Adapter:</strong> Uses async-job gem for high-performance job processing</li>
-	<li><strong>Multiple Queues:</strong> Support for different queue priorities and types</li>
-	<li><strong>Real-time Updates:</strong> Turbo Stream integration for live job execution tracking</li>
-	<li><strong>Persistent Storage:</strong> Job execution records stored in database</li>
+	<li><strong>ActiveJob Integration:</strong> Standard Rails ActiveJob framework.</li>
+	<li><strong>Async Job Adapter:</strong> Uses async-job gem for high-performance job processing.</li>
+	<li><strong>Multiple Queues:</strong> Support for different queue priorities and types.</li>
+	<li><strong>Real-time Updates:</strong> Turbo Stream integration for live job execution tracking.</li>
+	<li><strong>Persistent Storage:</strong> Job execution records stored in database.</li>
 </ul>
 
 <h3>📋 Key Files</h3>
@@ -86,27 +86,9 @@ document.querySelector('.form-inline').addEventListener('submit', function(e) {
 	maintaining responsive web performance even under heavy job loads.
 </p>
 
-<h3>🔄 Job Queues Available</h3>
-<div class="queue-info">
-	<% Rails.application.config.async_job.definitions.each do |name, config| %>
-	<div class="queue-item">
-		<strong><%= name %></strong>
-		<span class="queue-details">Queue for background job processing</span>
-	</div>
-	<% end %>
-</div>
-
-<div class="setup-info">
-	<h3>⚙️ Setup Requirements</h3>
-	<div class="requirement-item">
-		<strong>Redis Server:</strong> Must be running on localhost for job queuing
-	</div>
-	<div class="requirement-item">
-		<strong>Job Server:</strong> Run <code>bundle exec async-job-adapter-active_job-server</code> to process jobs
-	</div>
-	<div class="requirement-item">
-		<strong>Database:</strong> Job executions are tracked in the database
-	</div>
-</div>
-
-
+<h3>⚙️ Setup Requirements</h3>
+<ul>
+	<li><strong>Redis Server:</strong> Must be running on localhost for job queuing.</li>
+	<li><strong>Job Server:</strong> Run <code>bundle exec async-job-adapter-active_job-server</code> to process jobs.</li>
+	<li><strong>Database:</strong> Job executions are tracked in the database.</li>
+</ul>
