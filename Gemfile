@@ -1,24 +1,35 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-# gem "rails", "~> 7.1"
-gem "rails", git: "https://github.com/rails/rails"
+gem "rails", "~> 8.0"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
+gem "sqlite3", "~> 2.0"
 
 # Use the Falcon web server [https://github.com/socketry/falcon]
-gem 'falcon'
-gem 'puma', "~> 6.1.0"
+gem "falcon"
+gem "async-cable"
 
 # Use the async-job job server
-gem "async-job", "~> 0.5"
-gem "async-job-adapter-active_job", "~> 0.7"
-
+gem "async-job"
+gem "async-job-adapter-active_job"
+gem "async-job-processor-redis"
 gem "async-ollama"
+
+gem "console-adapter-rails"
+
+# gem "console-output-datadog", "~> 0.3"
+# gem "traces-backend-datadog", "~> 0.5"
+
+gem "async-redis"
+gem "thread-local"
+gem "async-websocket"
+
+gem "live"
+gem "markly"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -72,14 +83,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "console-adapter-rails", "~> 0.3.4"
-
-gem "console-output-datadog", "~> 0.3.0"
-gem "traces-backend-datadog", "~> 0.5.0"
-
-gem "async-redis", "~> 0.8.0"
-gem "thread-local", "~> 1.1"
-gem "async-websocket", "~> 0.26.1"
-
-gem "live", "~> 0.5.0"

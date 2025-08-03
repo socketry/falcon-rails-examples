@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_14_035057) do
+ActiveRecord::Schema[8.0].define(version: 2024_04_14_035057) do
   create_table "conversation_messages", force: :cascade do |t|
     t.integer "conversation_id", null: false
-    t.json "context"
-    t.text "prompt"
-    t.text "response"
+    t.text "role"
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conversation_id"], name: "index_conversation_messages_on_conversation_id"

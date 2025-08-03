@@ -7,7 +7,7 @@ class OllamaController < ApplicationController
     if id = params[:id]
       @conversation = Conversation.find(id)
     else
-      @conversation = Conversation.create!(model: 'llama2:13b')
+      @conversation = Conversation.create!(model: Async::Ollama::MODEL)
     end
 
     @tag = OllamaTag.new('ollama', conversation_id: @conversation.id)

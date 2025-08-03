@@ -1,8 +1,12 @@
 <h1>Async Job</h1>
 
+<p>This is a simple example of how to use the async job gem. You can use the form below to submit a job to the queue. The job will be executed in the background and the results will be displayed in the table below.</p>
+
+<p><strong>Note:</strong> The "default" queue will only work if you have Redis and <tt>bundle exec async-job-adapter-active_job-server</tt> running.</p>
+
 <form action="<%= job_execute_path %>" method="post">
 	<select name="queue">
-		<% Rails.application.config.async_job.backends.each do |name, _| %>
+		<% Rails.application.config.async_job.definitions.each do |name, _| %>
 		<option value="<%= name %>"><%= name %></option>
 		<% end %>
 	</select>

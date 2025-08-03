@@ -2,7 +2,7 @@ class JobController < ApplicationController
   def index
     @job_executions = JobExecution.all
   end
-  
+
   def execute
     job = MyJob
 

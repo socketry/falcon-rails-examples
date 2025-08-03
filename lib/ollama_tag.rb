@@ -3,82 +3,98 @@
 # Released under the MIT License.
 # Copyright, 2023, by Samuel Williams.
 
-require 'live'
-require 'async/ollama'
+require "live"
+require "async/ollama"
+require "async/ollama/toolbox"
+require "markly"
 
 class OllamaTag < Live::View
 	def initialize(...)
 		super
 		
-		# Defaults:
-		@data[:prompt] ||= ""
-		@data[:context] ||= nil
+		@conversation = nil
 	end
 	
 	def conversation
 		@conversation ||= Conversation.find_by(id: @data[:conversation_id])
 	end
 	
-	def update_conversation(prompt)
-		Console.info(self, "update_conversation", prompt: prompt)
+	def append_prompt(client, prompt)
+		conversation_prompt = conversation.conversation_messages.create!(role: "user", content: prompt)
+		conversation_reply = conversation.conversation_messages.create!(role: "assistant", content: "")
 		
-		Async::Ollama::Client.open do |client|
-			conversation_message = conversation.conversation_messages.build(prompt: prompt, response: String.new)
-			
-			generate = client.generate(prompt) do |response|
-				response.body.each do |token|
-					conversation_message.response += token
-					replace!
+		self.append(".conversation .messages") do |builder|
+			self.render_message(builder, conversation_prompt)
+			self.render_message(builder, conversation_reply)
+		end
+		
+		agent_conversation = conversation.agent_conversation(client)
+		chat = agent_conversation.call(prompt) do |response|
+			response.body.each do |token|
+				conversation_reply.content += token
+				
+				self.replace(".message.id#{conversation_reply.id}") do |builder|
+					self.render_message(builder, conversation_reply)
 				end
 			end
-			
-			conversation_message.response = generate.response
-			conversation_message.context = generate.context
-			conversation_message.save!
-			
-			@data[:context] = generate.context
-			
-			replace!
+		end
+		
+		conversation_reply.content = chat.response
+		conversation_reply.save!
+		
+		return conversation_reply
+	end
+	
+	def update_conversation(prompt)
+		Console.info(self, "Updating conversation", id: conversation.id, prompt: prompt)
+		
+		Async::Ollama::Client.open do |client|
+			conversation_message = append_prompt(client, prompt)
 		end
 	end
 	
 	def handle(event)
 		case event[:type]
 		when "keypress"
-			details = event[:details]
-			@data[:prompt] = details[:value]
+			detail = event[:detail]
 			
-			if details[:key] == "Enter"
-				prompt = @data[:prompt]
-				@data[:prompt] = ""
-				update_conversation(prompt)
+			if detail[:key] == "Enter"
+				prompt = detail[:value]
 				
-				replace!
+				Async do
+					update_conversation(prompt)
+				end
 			end
 		end
 	end
 	
 	def forward_keypress
-		"live.forward(#{JSON.dump(@id)}, event, {value: event.target.value, key: event.key})"
+		"live.forwardEvent(#{JSON.dump(@id)}, event, {value: event.target.value, key: event.key}); if (event.key == 'Enter') event.target.value = '';"
 	end
 	
 	def render_message(builder, message)
-		builder.tag(:p, class: "message") do
-			builder.text(message.prompt)
-		end
-		
-		builder.tag(:p, class: "response") do
-			builder.text(message.response)
+		builder.tag(:div, class: "message id#{message.id}") do
+			if message.role == "user"
+				builder.inline_tag(:p, class: "prompt") do
+					builder.text(message.content)
+				end
+			else
+				builder.inline_tag(:div, class: "response") do
+					builder.raw(Markly.render_html(message.content, extensions: %i[autolink table]))
+				end
+			end
 		end
 	end
 	
 	def render(builder)
 		builder.tag(:div, class: "conversation") do
-			conversation.conversation_messages.each do |message|
-				render_message(builder, message)
+			builder.tag(:div, class: "messages") do
+				conversation&.conversation_messages&.each do |message|
+					render_message(builder, message)
+				end
 			end
 			
-			builder.tag(:input, type: "text", value: @data[:prompt], style: "width: 100%", onkeypress: forward_keypress, placeholder: "Type here...")
+			builder.tag(:input, type: "text", class: "prompt", value: @data[:prompt], onkeypress: forward_keypress, autofocus: true, placeholder: "Type prompt here...")
 		end
 	end
 end

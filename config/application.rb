@@ -23,8 +23,12 @@ module Example
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.active_support.to_time_preserves_timezone = :zone
 
     # Disallow permanent checkout of activerecord connections (request scope):
     config.active_record.permanent_connection_checkout = :disallowed
+
+    # Use Async::Job as the Active Job queue adapter.
+    config.active_job.queue_adapter = :async_job
   end
 end

@@ -114,11 +114,12 @@ class GameTag < Live::View
 	end
 	
 	def handle(event)
-		# Console.info(self, "handle", event: event.inspect)
+		# Console.info(self, "handle", event.inspect)
 		
 		if event[:type] == "keyup"
-			details = event[:details]
-			case details[:code]
+			detail = event[:detail]
+			
+			case detail[:code]
 			when "KeyW", "ArrowUp"
 				@data[:y] = (@data[:y].to_i - 1) % board.height
 			when "KeyS", "ArrowDown"
@@ -130,12 +131,12 @@ class GameTag < Live::View
 			end
 			
 			# Redraw the game:
-			replace!
+			self.update!
 		end
 	end
 	
 	def forward_keypress
-		"live.forward(#{JSON.dump(@id)}, event, {code: event.code})"
+		"live.forwardEvent(#{JSON.dump(@id)}, event, {code: event.code})"
 	end
 	
 	def render(builder)
