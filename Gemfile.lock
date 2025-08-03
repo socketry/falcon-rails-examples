@@ -155,7 +155,7 @@ GEM
       async-rest
     async-pool (0.11.0)
       async (>= 2.0)
-    async-rails-x (0.1.0)
+    async-rails-x (0.1.1)
       async-cable
       async-job-adapter-active_job
       async-websocket
@@ -391,6 +391,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  async-job-adapter-active_job
   async-job-processor-redis
   async-ollama
   async-rails-x
@@ -399,6 +400,7 @@ DEPENDENCIES
   capybara
   importmap-rails
   jbuilder
+  live
   markly
   rails!
   redis (>= 4.0.1)

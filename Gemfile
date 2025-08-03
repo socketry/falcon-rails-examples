@@ -9,11 +9,15 @@ gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 2.0"
 
-# Use Async and Falcon.
+# Use Async and Falcon:
 gem "async-rails-x"
 
 # Async Job example:
+gem "async-job-adapter-active_job"
 gem "async-job-processor-redis"
+
+# Game examples:
+gem "live"
 
 # Chat example:
 gem "async-redis"
