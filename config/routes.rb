@@ -12,11 +12,11 @@ Rails.application.routes.draw do
 
   # Chat Example:
   get "chat/index"
-  match "chat/connect", via: [:get, :connect]
+  connect "chat/connect"
 
   # Game Example:
   get "game/index"
-  match "game/live", via: [:get, :connect]
+  connect "game/live"
 
   # Job Example:
   get "job/index"
@@ -24,11 +24,11 @@ Rails.application.routes.draw do
 
   # Ollama Example:
   get "ollama/index"
-  match "ollama/live", via: [:get, :connect]
+  connect "ollama/live"
 
   # Flappy Example:
   get "flappy/index"
-  match "flappy/live", via: [:get, :connect]
+  connect "flappy/live"
 
   # SSE Example:
   get 'sse/index'
