@@ -9,27 +9,23 @@ gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 2.0"
 
-# Use the Falcon web server [https://github.com/socketry/falcon]
-gem "falcon"
-gem "async-cable"
+# Use Async and Falcon.
+gem "async-rails-x"
 
-# Use the async-job job server
-gem "async-job"
-gem "async-job-adapter-active_job"
+# Async Job example:
 gem "async-job-processor-redis"
-gem "async-ollama"
 
-gem "console-adapter-rails"
-
-# gem "console-output-datadog", "~> 0.3"
-# gem "traces-backend-datadog", "~> 0.5"
-
+# Chat example:
 gem "async-redis"
 gem "thread-local"
-gem "async-websocket"
 
-gem "live"
+# Ollama example:
+gem "async-ollama"
 gem "markly"
+
+# For integration with Datadog:
+# gem "console-output-datadog", "~> 0.3"
+# gem "traces-backend-datadog", "~> 0.5"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"

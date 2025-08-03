@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: add5a73b26e78d6b13945525874749ae40af21c7
+  revision: 74092090e7b096904cf0c15db7dfb31970f724ab
   branch: main
   specs:
     actioncable (8.1.0.alpha)
@@ -155,6 +155,14 @@ GEM
       async-rest
     async-pool (0.11.0)
       async (>= 2.0)
+    async-rails-x (0.1.0)
+      async-cable
+      async-job-adapter-active_job
+      async-websocket
+      console-adapter-rails
+      falcon
+      live
+      rails (>= 8.0)
     async-redis (0.11.2)
       async (~> 2.10)
       async-pool (~> 0.2)
@@ -383,20 +391,14 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  async-cable
-  async-job
-  async-job-adapter-active_job
   async-job-processor-redis
   async-ollama
+  async-rails-x
   async-redis
-  async-websocket
   bootsnap
   capybara
-  console-adapter-rails
-  falcon
   importmap-rails
   jbuilder
-  live
   markly
   rails!
   redis (>= 4.0.1)
