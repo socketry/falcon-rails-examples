@@ -1,28 +1,54 @@
 /* AI Chat Interface Styles */
 
-.chat-tips {
-	background: #f8f9fa;
-	border: 1px solid #e9ecef;
-	border-radius: 6px;
-	padding: 20px;
-	margin: 20px 0;
-}
-
-.chat-tips h4 {
-	margin-top: 0;
-	margin-bottom: 15px;
-	color: #495057;
-}
-
-.chat-tips ul {
-	margin-bottom: 0;
-}
-
-.chat-tips li {
-	margin-bottom: 8px;
-}
-
 .chat-container {
-	margin: 20px 0;
-	min-height: 300px;
+	margin: 2rem;
+	min-height: 10rem;
+}
+
+.conversation input.prompt {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px;
+	border: 2px solid #ddd;
+	border-radius: 6px;
+	font-size: 16px;
+	margin-top: 15px;
+}
+
+.conversation input.prompt:focus {
+	outline: none;
+	border-color: #4caf50;
+	box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.conversation .messages {
+	max-height: 400px;
+	overflow-y: auto;
+	margin-bottom: 15px;
+	border: 1px solid #eee;
+	border-radius: 6px;
+	padding: 15px;
+	background: #fafafa;
+}
+
+.conversation .message {
+	margin: 10px 0;
+	padding: 10px;
+	border-radius: 6px;
+}
+
+.conversation .message .prompt {
+	background: #e3f2fd;
+	color: #1976d2;
+	padding: 8px 12px;
+	border-radius: 6px;
+	margin: 0;
+}
+
+.conversation .message .response {
+	background: white;
+	border: 1px solid #ddd;
+	padding: 12px;
+	border-radius: 6px;
+	margin: 0;
 }

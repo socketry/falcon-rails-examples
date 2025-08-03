@@ -1,21 +1,4 @@
-/* SSE Event Stream Terminal Styles */
-
-#history {
-	background: #000;
-	color: #00ff00;
-	font-family: 'Monaco', 'Consolas', monospace;
-	height: 400px;
-	overflow-y: auto;
-	border: 2px solid #333;
-	padding: 20px;
-	border-radius: 6px;
-	margin: 20px 0;
-}
-
-.terminal-line {
-	margin: 2px 0;
-	font-size: 14px;
-}
+/* SSE Event Stream Specific Styles */
 
 .event-count {
 	color: #ffff00;
