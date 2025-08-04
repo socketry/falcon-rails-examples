@@ -27,9 +27,12 @@ gem "thread-local"
 gem "async-ollama"
 gem "markly"
 
-# For integration with Datadog:
-# gem "console-output-datadog", "~> 0.3"
-# gem "traces-backend-datadog", "~> 0.5"
+# Observability and metrics:
+gem "traces"
+gem "traces-backend-datadog"
+
+gem "metrics"
+gem "metrics-backend-datadog"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
