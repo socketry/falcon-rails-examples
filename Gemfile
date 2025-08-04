@@ -34,6 +34,9 @@ gem "traces-backend-datadog"
 gem "metrics"
 gem "metrics-backend-datadog"
 
+gem "console"
+gem "console-output-datadog"
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
