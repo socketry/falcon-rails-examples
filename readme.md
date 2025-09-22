@@ -109,7 +109,13 @@ The application will be available at `https://localhost:9292` (note: Falcon serv
 If you have the `datadog-agent` running, you can enable instrumentation for Falcon:
 
 ```bash
-TRACES_BACKEND=traces/backend/datadog METRICS_BACKEND=metrics/backend/datadog bundle exec falcon serve
+$ TRACES_BACKEND=traces/backend/datadog METRICS_BACKEND=metrics/backend/datadog bundle exec falcon serve
+```
+
+If you'd like to log metrics and traces to the terminal:
+
+```bash
+$ TRACES_BACKEND=traces/backend/console METRICS_BACKEND=metrics/backend/console bundle exec falcon serve
 ```
 
 ## Technical Architecture
