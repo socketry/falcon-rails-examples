@@ -1,3 +1,5 @@
+# config/console.rb
+
 def make_output(io = nil, env = ENV, **options)
 	require "console/output/datadog"
 	

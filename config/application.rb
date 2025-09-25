@@ -27,6 +27,7 @@ module Example
 
     # Disallow permanent checkout of activerecord connections (request scope):
     config.active_record.permanent_connection_checkout = :disallowed
+    config.active_support.isolation_level = :fiber
 
     # Use Async::Job as the Active Job queue adapter.
     config.active_job.queue_adapter = :async_job

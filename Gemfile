@@ -11,6 +11,7 @@ gem "sqlite3", "~> 2.0"
 
 # Use Async and Falcon:
 gem "falcon-rails"
+gem "agent-context"
 
 # Async Job example:
 gem "async-job-adapter-active_job"
@@ -29,10 +30,10 @@ gem "markly"
 
 # Observability and metrics:
 gem "traces"
-gem "traces-backend-datadog"
+gem "traces-backend-datadog", require: false
 
 gem "metrics"
-gem "metrics-backend-datadog"
+gem "metrics-backend-datadog", require: false
 
 gem "console"
 gem "console-output-datadog"
@@ -65,7 +66,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
