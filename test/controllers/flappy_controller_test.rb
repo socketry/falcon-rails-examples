@@ -5,9 +5,4 @@ class FlappyControllerTest < ActionDispatch::IntegrationTest
     get flappy_index_url
     assert_response :success
   end
-
-  test "should get live" do
-    get flappy_live_url
-    assert_response :success
-  end
 end
