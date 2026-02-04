@@ -8,9 +8,9 @@ class SseController < ApplicationController
 
 	def events
 		body = proc do |stream|
-			while true
+			5.times do
 				stream.write("data: #{Time.now}\n\n")
-				sleep 1
+				sleep 0.05
 			end
 		end
 		
