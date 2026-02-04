@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/rack/rack.git
+  revision: 4f6eeed2fedf5e5a4ace0bde9dd4f3a1f931e782
+  specs:
+    rack (3.2.0)
+
+GIT
   remote: https://github.com/rails/rails.git
   revision: 07db688eda60ce0e57432f2299be0abf75da953f
   branch: main
@@ -371,7 +377,6 @@ GEM
       stringio
     public_suffix (6.0.2)
     racc (1.8.1)
-    rack (3.2.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -492,6 +497,7 @@ DEPENDENCIES
   metrics
   metrics-backend-datadog
   minitest (~> 5.0)
+  rack!
   rails!
   redis (>= 4.0.1)
   selenium-webdriver

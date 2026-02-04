@@ -1,5 +1,8 @@
 source "https://rubygems.org"
 
+# Bundle edge Rack
+gem "rack", github: "rack/rack"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", git: "https://github.com/rails/rails.git", branch: "main"
 
