@@ -1,10 +1,6 @@
 source "https://rubygems.org"
 
-# Bundle edge Rack
-gem "rack", github: "rack/rack"
-
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", git: "https://github.com/rails/rails.git", branch: "main"
+gem "rails"
 
 # Pin minitest to 5.x for compatibility with edge Rails
 gem "minitest", "~> 5.0"
