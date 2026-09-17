@@ -58,7 +58,7 @@ This application showcases 7 different examples, each demonstrating specific Fal
 ### 📡 SSE Example
 **Demonstrates**: Server-Sent Events (EventSource)
 - Server-Sent Events for one-way real-time updates
-- Connection pool monitoring
+- Continuous timestamp updates delivered once per second
 - Alternative to WebSocket for simple real-time updates
 
 ## Getting Started
@@ -66,8 +66,9 @@ This application showcases 7 different examples, each demonstrating specific Fal
 ### Prerequisites
 
 - Ruby (version specified in `.ruby-version`).
-- Redis server running on localhost.
+- Redis server running on localhost (required by the chat and job examples).
 - SQLite3 (for database).
+- Ollama with at least one installed model (required only by the Ollama example).
 
 ### Installation
 
@@ -84,10 +85,10 @@ Install dependencies:
 bundle install
 ```
 
-Setup the database:
+Prepare the database:
 
 ```bash
-bin/rails db:migrate
+bin/rails db:prepare
 ```
 
 Ensure Redis is running:
@@ -96,26 +97,44 @@ Ensure Redis is running:
 redis-server
 ```
 
-Start the Falcon server:
+Start the Falcon server. Preloading Rails before Falcon forks avoids loading
+native libraries for the first time inside worker processes:
 
 ```bash
-bundle exec falcon serve
+bundle exec falcon serve --preload config/environment
 ```
 
 The application will be available at `https://localhost:9292` (note: Falcon serves HTTPS by default).
+
+To process jobs, start the Active Job server in another terminal after Redis is
+running:
+
+```bash
+bundle exec async-job-adapter-active_job-server
+```
+
+For the Ollama example, make sure Ollama is running and install the default
+model:
+
+```bash
+ollama pull llama3.2
+```
+
+You can select a different model with `ASYNC_OLLAMA_MODEL`. If the selected
+model is unavailable, the example uses the first model installed in Ollama.
 
 ### Running with Instrumentation
 
 If you have the `datadog-agent` running, you can enable instrumentation for Falcon:
 
 ```bash
-$ TRACES_BACKEND=traces/backend/datadog METRICS_BACKEND=metrics/backend/datadog bundle exec falcon serve
+TRACES_BACKEND=traces/backend/datadog METRICS_BACKEND=metrics/backend/datadog bundle exec falcon serve --preload config/environment
 ```
 
 If you'd like to log metrics and traces to the terminal:
 
 ```bash
-$ TRACES_BACKEND=traces/backend/console METRICS_BACKEND=metrics/backend/console bundle exec falcon serve
+TRACES_BACKEND=traces/backend/console METRICS_BACKEND=metrics/backend/console bundle exec falcon serve --preload config/environment
 ```
 
 ## Technical Architecture
@@ -125,7 +144,7 @@ Each example demonstrates different aspects of Falcon's architecture:
 - **Streaming Controller**: Basic HTTP streaming with `Rack::Response`
 - **WebSocket Integration**: Using `Async::WebSocket::Adapters::Rails`
 - **Live::View Framework**: Real-time view updates over WebSocket
-- **Background Jobs**: Standard Rails ActiveJob integration
+- **Background Jobs**: Rails Active Job processing with `async-job-adapter-active_job` and Redis
 - **Redis Integration**: Pub/sub messaging for real-time features
 - **AI Integration**: Streaming LLM responses with `async-ollama`
 
