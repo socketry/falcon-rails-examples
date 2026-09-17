@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 gem "rails"
 
+# Active Support 8.1 passes parser options as a positional hash, which JSON 3 no longer accepts.
+gem "json", "< 3"
+
 # Pin minitest to 5.x for compatibility with edge Rails
 gem "minitest", "~> 5.0"
 
@@ -55,7 +58,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", ">= 4.0.1"
+gem "redis", ">= 4.0.1", "< 6"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"

@@ -10,33 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_04_14_035057) do
+ActiveRecord::Schema[8.1].define(version: 2024_04_14_035057) do
   create_table "conversation_messages", force: :cascade do |t|
-    t.integer "conversation_id", null: false
-    t.text "role"
     t.text "content"
+    t.integer "conversation_id", null: false
     t.datetime "created_at", null: false
+    t.text "role"
     t.datetime "updated_at", null: false
     t.index ["conversation_id"], name: "index_conversation_messages_on_conversation_id"
   end
 
   create_table "conversations", force: :cascade do |t|
-    t.string "model", null: false
     t.datetime "created_at", null: false
+    t.string "model", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "highscores", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "name"
     t.integer "score"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "job_executions", force: :cascade do |t|
-    t.string "name"
-    t.json "data"
     t.datetime "created_at", null: false
+    t.json "data"
+    t.string "name"
     t.datetime "updated_at", null: false
   end
 

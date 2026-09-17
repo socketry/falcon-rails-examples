@@ -52,6 +52,6 @@
 <h3>⚙️ Setup Requirements</h3>
 <ul>
 	<li><strong>Ollama Server:</strong> Must have Ollama running locally with a model installed.</li>
-	<li><strong>Model Installation:</strong> Run <code>ollama pull llama2</code> or similar to install an AI model.</li>
+	<li><strong>Model Installation:</strong> Run <code>ollama pull <%= Async::Ollama::MODEL %></code>, or set <code>ASYNC_OLLAMA_MODEL</code> to an installed model. If that model is unavailable, the example uses the first installed model.</li>
 	<li><strong>Database:</strong> Conversations and messages are persisted to database.</li>
 </ul>

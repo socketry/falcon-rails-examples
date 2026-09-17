@@ -13,7 +13,7 @@
 <div id="history" class="container terminal"></div>
 
 <script>
-	var eventSource = new EventSource("events");
+	var eventSource = new EventSource("<%= sse_events_path %>");
 	var messageCount = 0;
 	
 	eventSource.addEventListener("open", function(event) {

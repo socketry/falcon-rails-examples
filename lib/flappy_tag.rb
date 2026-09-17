@@ -164,19 +164,23 @@ class FlappyTag < Live::View
 	
 	def handle(event)
 		case event[:type]
-		when "keypress"
-			detail = event[:detail]
-			
-			if @game.nil?
-				start_game!
-			elsif detail[:key] == " "
-				@bird&.jump
-			end
+		when "keydown"
+			flap! if event.dig(:detail, :key) == " "
+		when "pointerdown"
+			flap!
 		end
 	end
 	
-	def forward_keypress
-		"event.preventDefault(); live.forwardEvent(#{JSON.dump(@id)}, event, {value: event.target.value, key: event.key})"
+	def flap!
+		if @game.nil?
+			start_game!
+		else
+			@bird&.jump
+		end
+	end
+	
+	def forward_keydown
+		"event.preventDefault(); live.forwardEvent(#{JSON.dump(@id)}, event, {key: event.key})"
 	end
 	
 	def reset!
@@ -241,7 +245,7 @@ class FlappyTag < Live::View
 	end
 	
 	def render(builder)
-		builder.tag(:div, class: "flappy", tabIndex: 0, onKeyPress: forward_keypress) do
+		builder.tag(:div, class: "flappy", tabIndex: 0, onkeydown: forward_keydown, onpointerdown: forward_event) do
 			if @game
 				builder.inline_tag(:div, class: "score") do
 					builder.text(@score)

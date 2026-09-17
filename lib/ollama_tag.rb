@@ -49,27 +49,53 @@ class OllamaTag < Live::View
 		Console.info(self, "Updating conversation", id: conversation.id, prompt: prompt)
 		
 		Async::Ollama::Client.open do |client|
-			conversation_message = append_prompt(client, prompt)
+			select_available_model(client)
+			append_prompt(client, prompt)
+		end
+	end
+	
+	def select_available_model(client)
+		models = client.models.names
+		return if models.include?(conversation.model)
+		
+		if model = models.first
+			Console.warn(self, "Configured model is not installed; using an available model", configured: conversation.model, selected: model)
+			conversation.update!(model: model)
+		else
+			raise "No Ollama models are installed. Run `ollama pull #{Async::Ollama::MODEL}` first."
+		end
+	end
+	
+	def report_error(error)
+		Console.error(self, error)
+		
+		self.append(".conversation .messages") do |builder|
+			builder.tag(:div, class: "message error") do
+				builder.text("Ollama error: #{error.message}")
+			end
 		end
 	end
 	
 	def handle(event)
 		case event[:type]
-		when "keypress"
+		when "keydown"
 			detail = event[:detail]
 			
-			if detail[:key] == "Enter"
-				prompt = detail[:value]
+			if detail[:key] == "Enter" && (prompt = detail[:value].to_s.strip).length > 0
 				
 				Async do
-					update_conversation(prompt)
+					begin
+						update_conversation(prompt)
+					rescue => error
+						report_error(error)
+					end
 				end
 			end
 		end
 	end
 	
-	def forward_keypress
-		"live.forwardEvent(#{JSON.dump(@id)}, event, {value: event.target.value, key: event.key}); if (event.key == 'Enter') event.target.value = '';"
+	def forward_keydown
+		"if (event.key === 'Enter') { event.preventDefault(); live.forwardEvent(#{JSON.dump(@id)}, event, {value: event.target.value, key: event.key}); event.target.value = ''; }"
 	end
 	
 	def render_message(builder, message)
@@ -94,7 +120,7 @@ class OllamaTag < Live::View
 				end
 			end
 			
-			builder.tag(:input, type: "text", class: "prompt", value: @data[:prompt], onkeypress: forward_keypress, autofocus: true, placeholder: "Type prompt here...")
+			builder.tag(:input, type: "text", class: "prompt", value: @data[:prompt], onkeydown: forward_keydown, autofocus: true, placeholder: "Type prompt here...")
 		end
 	end
 end

@@ -10,7 +10,7 @@ class OllamaController < ApplicationController
       @conversation = Conversation.create!(model: Async::Ollama::MODEL)
     end
 
-    @tag = OllamaTag.new('ollama', conversation_id: @conversation.id)
+    @tag = OllamaTag.root('ollama', data: {conversation_id: @conversation.id})
   end
 
   skip_before_action :verify_authenticity_token, only: :live

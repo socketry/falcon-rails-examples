@@ -4,7 +4,7 @@ class GameController < ApplicationController
   RESOLVER = Live::Resolver.allow(GameTag)
 
   def index
-    @tag = GameTag.new('game')
+    @tag = GameTag.root('game')
   end
 
   skip_before_action :verify_authenticity_token, only: :live
