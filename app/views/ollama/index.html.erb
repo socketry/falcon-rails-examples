@@ -7,19 +7,37 @@
 </p>
 
 <h2>💬 Try the AI Chat</h2>
-	<p>Start a conversation with the AI below. Watch as responses stream in real-time, token by token!</p>
+	<p>Start a conversation with the AI below. Watch the answer grow as it is generated!</p>
 	
-<%= javascript_import_module_tag "live" %>
-
-<div class="chat-container">
-	<%= raw @tag.to_html %>
+<div class="chat-container conversation ollama"
+  data-controller="ollama"
+  data-ollama-conversation-value="<%= @conversation.signed_id(purpose: :ollama) %>"
+  data-ollama-url-value="<%= ollama_reply_path %>">
+  <div class="messages" data-ollama-target="messages" role="log" aria-label="Conversation">
+    <% @conversation.conversation_messages.order(:created_at, :id).each do |message| %>
+      <div class="message">
+        <% if message.role == "user" %>
+          <p class="prompt"><%= message.content %></p>
+        <% else %>
+          <div class="response"><%= ollama_response_html(message.content) %></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <form data-action="submit->ollama#submit">
+    <label for="ollama-prompt">Your prompt</label>
+    <input id="ollama-prompt" class="prompt" type="text" required disabled
+      data-ollama-target="prompt" placeholder="Ask a question…">
+    <button type="submit" disabled data-ollama-target="send">Send</button>
+  </form>
+  <p role="status" data-ollama-target="status">Connecting…</p>
 </div>
 
 <h2>🔧 Technical Implementation</h2>
 <ul>
 	<li><strong>Ollama Integration:</strong> Uses async-ollama gem for local LLM inference.</li>
 	<li><strong>Streaming Responses:</strong> Real-time AI response streaming via WebSocket.</li>
-	<li><strong>Live::View Framework:</strong> Real-time UI updates without page refreshes.</li>
+	<li><strong>Action Cable:</strong> A conversation subscription receives updates while a separate HTTP request generates the answer.</li>
 	<li><strong>Persistent Conversations:</strong> Chat history stored in database with models.</li>
 	<li><strong>Markdown Rendering:</strong> AI responses rendered with Markly for rich formatting.</li>
 </ul>
@@ -27,8 +45,9 @@
 <h3>📋 Key Files</h3>
 <%= source_code_links(
 	sources: [
-		{ path: 'lib/ollama_tag.rb', line: 22, description: 'OllamaTag - Live::View AI chat implementation' },
-		{ path: 'app/controllers/ollama_controller.rb', line: 1, description: 'OllamaController - WebSocket connection handling' },
+		{ path: 'app/controllers/ollama_controller.rb', line: 1, description: 'OllamaController - Streaming model output and broadcasting updates' },
+		{ path: 'app/channels/ollama_channel.rb', line: 1, description: 'OllamaChannel - Conversation subscriptions' },
+		{ path: 'app/javascript/controllers/ollama_controller.js', line: 1, description: 'Browser - Prompt submission and Action Cable updates' },
 		{ path: 'app/models/conversation.rb', line: 1, description: 'Conversation - Chat conversation management' },
 		{ path: 'app/models/conversation_message.rb', line: 1, description: 'ConversationMessage - Individual message storage' }
 	]
@@ -43,7 +62,7 @@
 
 <h3>🎯 Key Features</h3>
 <ul>
-	<li><strong>Token-by-Token Streaming:</strong> Responses appear character by character</li>
+	<li><strong>Incremental Streaming:</strong> Answers appear as output arrives from the model.</li>
 	<li><strong>Conversation Memory:</strong> AI remembers context from previous messages</li>
 	<li><strong>Rich Formatting:</strong> Supports markdown in AI responses</li>
 	<li><strong>Real-time Updates:</strong> UI updates live as AI generates responses</li>
@@ -52,6 +71,7 @@
 <h3>⚙️ Setup Requirements</h3>
 <ul>
 	<li><strong>Ollama Server:</strong> Must have Ollama running locally with a model installed.</li>
+	<li><strong>Redis:</strong> Action Cable uses Redis to broadcast conversation updates.</li>
 	<li><strong>Model Installation:</strong> Run <code>ollama pull <%= Async::Ollama::MODEL %></code>, or set <code>ASYNC_OLLAMA_MODEL</code> to an installed model. If that model is unavailable, the example uses the first installed model.</li>
 	<li><strong>Database:</strong> Conversations and messages are persisted to database.</li>
 </ul>

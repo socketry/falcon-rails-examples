@@ -6,6 +6,9 @@ Rails.application.config.assets.version = "1.0"
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
 
+# actioncable-next supplies the engine; the JavaScript client remains in actioncable.
+Rails.application.config.assets.paths << File.join(Gem.loaded_specs.fetch("actioncable").full_gem_path, "app/assets/javascripts")
+
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.

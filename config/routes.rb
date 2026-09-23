@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   # Ollama Example:
   get "ollama/index"
-  connect "ollama/live"
+  post "ollama/reply"
 
   # Flappy Example:
   get "flappy/index"

@@ -42,11 +42,32 @@ This application showcases 7 different examples, each demonstrating specific Fal
 - Shows how Falcon integrates with Rails' job processing
 
 ### 🤖 Ollama Example
-**Demonstrates**: AI/LLM streaming integration
+**Demonstrates**: AI/LLM streaming with Action Cable
 - Streaming AI chat interface using Ollama
-- Real-time AI response streaming
+- Real-time AI response streaming over an Action Cable subscription
 - Persistent conversation storage
 - Perfect example of Falcon's streaming capabilities with AI
+
+Visit `/ollama/index` to start a conversation, or `/ollama/index?id=ID` to reopen a
+saved conversation. Start Redis and Ollama as described below; no job worker is needed.
+The existing `falcon-rails` dependency loads `async-cable` to serve `/cable`.
+
+1. The browser subscribes to `OllamaChannel` with the page's signed conversation ID.
+2. Once the subscription is confirmed, it enables the prompt form.
+3. A normal POST to `/ollama/reply` reads Ollama's response incrementally.
+4. Each piece updates the accumulated answer, which `broadcast_to` sends to the browser.
+5. The controller saves the completed exchange and returns the final answer over HTTP.
+
+The generation belongs to the POST request. Under Falcon, `Sync` reuses its current
+task; waiting on Ollama lets other request fibers run. The Cable subscription is a
+separate connection: losing it does not cancel generation. The final HTTP response
+recovers missed updates. This example accepts one prompt at a time in its UI; it
+does not implement durable jobs, reconnect replay, or cross-client turn ordering.
+
+The core files are `app/controllers/ollama_controller.rb`,
+`app/channels/ollama_channel.rb`, and
+`app/javascript/controllers/ollama_controller.js`. Replies are rendered as sanitized
+Markdown, and successful exchanges are saved for the next prompt's context.
 
 ### 🐦 Flappy Example
 **Demonstrates**: Real-time game with Live::View
@@ -66,7 +87,7 @@ This application showcases 7 different examples, each demonstrating specific Fal
 ### Prerequisites
 
 - Ruby (version specified in `.ruby-version`).
-- Redis server running on localhost (required by the chat and job examples).
+- Redis server running on localhost (required by the chat, job, and Ollama examples).
 - SQLite3 (for database).
 - Ollama with at least one installed model (required only by the Ollama example).
 
@@ -144,6 +165,7 @@ Each example demonstrates different aspects of Falcon's architecture:
 - **Streaming Controller**: Basic HTTP streaming with `Rack::Response`
 - **WebSocket Integration**: Using `Async::WebSocket::Adapters::Rails`
 - **Live::View Framework**: Real-time view updates over WebSocket
+- **Action Cable**: Conversation subscriptions and incremental Ollama updates
 - **Background Jobs**: Rails Active Job processing with `async-job-adapter-active_job` and Redis
 - **Redis Integration**: Pub/sub messaging for real-time features
 - **AI Integration**: Streaming LLM responses with `async-ollama`
