@@ -5,6 +5,10 @@
 	min-height: 10rem;
 }
 
+.ollama .response {
+	overflow-wrap: anywhere;
+}
+
 .conversation input.prompt {
 	width: 100%;
 	box-sizing: border-box;
